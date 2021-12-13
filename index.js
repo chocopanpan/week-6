@@ -1,4 +1,12 @@
-const cardValues = {
+// Start by creating constant variables that won't have value changes that help set up the cards and decks //
+
+  // The deck will consist of cards and the cards will make an array.  Also need to make it so that the deck can deal and shuffle out to the players. //
+class Deck {
+    constructor() {
+    this.deck = [];
+    const suits = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
+    const values = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King'];
+    const cvalues = {
     '2' : 2,
     '3' : 3,
     '4' : 4,
@@ -12,86 +20,82 @@ const cardValues = {
     'Queen' : 12,
     'King' : 13,
     'Ace' : 14
-  }
-  
-  class Player {
-  constructor(name, deck, points) {
-      this.name = name;
-      this.deck = deck;
-      this.points = points;
-  }
-  
-}
+    }
 
-class Deck {
-  constructor() {
-    this.deck = [];
-
-    const suits = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
-    const values = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King'];
-   
     for (let suit in suits) {
-      for (let value in values) {
-        this.deck.push(`${values[value]} of ${suits[suit]}`);
-      }
-    }
-  }
-
-  shuffle(){
-    const { deck } = this;
-    let m = deck.length, i;
-
-    while(m){
-      i = Math.floor(Math.random() * m--);
-
-      [deck[m], deck[i]] = [deck[i], deck[m]];
+        for (let value in values) {
+                this.deck.push(`${values[value]} of ${suits[suit]}`);
+            }
+        }
     }
 
-    return this;
-  }
-
-  deal(){
-    return this.deck;
-  }
+    shuffle(){
+        const { deck } = this;
+        let m = deck.length, i;
+    
+        while(m){
+          i = Math.floor(Math.random() * m--);
+    
+          [deck[m], deck[i]] = [deck[i], deck[m]];
+        }
+    
+        return this;
+    }
+    
+      deal(){
+        return this.deck;
+    }
+    
 }
 
-const deck1 = new Deck();
-const deck2 = new Deck();
-deck1.shuffle()
-deck1.deal()
-let player1 = new Player('Charlie', deck1.deck.slice(0, 26), 0);
-console.log(player1);
-deck2.shuffle()
-deck2.deal()
-let player2 = new Player('Jasmine', deck2.deck.slice(26, 53), 0);
-console.log(player2);
+// test out class
+const mainDeck = new Deck();
+mainDeck.shuffle();
+const deckOne = mainDeck.deck.slice(0, 26);
+const deckTwo = mainDeck.deck.slice(27, 53);
 
-//   console.log(deck1.deck.slice(0, 26));
-//   console.log(deck2.deck.slice(26, 53));
-
-const player1Card = player1.deck.pop();
-const player2Card = player2.deck.pop();
-
-function startingRounds() {
-  for (let i = 0; i < deck1.deck; i++) {
-      for (let j = 0; j < deck2.deck; j++) {
-      if (deck1.deck[i] > deck2.deck[j]) {
-      player1.points = player1.points + 1;
-      player2.points = player2.points + 0;
-  }   else if (deck2.deck[j] > deck1.deck[i]) {
-      player2.points = player2.points + 1;
-      player1.points = player1.points + 0;
-  }   else {
-      player1.points = player1.points + 0;
-      player2.points = player2.points + 0;
-  }
-      }
-  }
-  
+// Create a player class.  The player will have: a name, a deck, and points to start out at the beginning of each round (the beginning count would be 0 for both of them) //
+class Player {
+    constructor(name, deck, points) {
+        this.name = name;
+        this.deck = deck;
+        this.points = points;
+    }
 }
 
-startingRounds()
+let playerOne = console.log(new Player('One', deckOne, 0));
+let playerTwo = console.log(new Player('Two', deckTwo, 0));
+console.log(`${this.playerOne} played ${deckOne[0]}`);
+console.log(deckTwo[0]);
 
-function compareCards(cardOne, cardTwo) {
-  return cardValues[cardOne.values] > cardValues[cardTwo.values];
+// Create turning system.  The taking of turns for each player as they draw a card //
+function takingTurns() {
+    playerTwo = !playerTwo;
+}
+
+// Determine which player gets the point between the cards played //
+function winningCard(deckOne, deckTwo) {
+    
+    for (i = 0; i < deckOne[cvalue]; i++) {
+        for (j = 0; j < deckOne[cvalue]; j++) {
+    if (deckOne[cvalue] > deckTwo[cvalue]) {
+        `${playerOne} wins the round.`
+    } else if (deckTwo[cvalue] > deckOne[cvalue]) {
+        `${playerTwo} wins the round.`
+    } else {
+        "No player wins the round.  It's a tie."
+            }
+        }
+    }
+}
+
+console.log(winningCard());
+
+// Creating a function to gather the points per player //
+
+
+// Create the code for the game in one place //
+
+function startWar() {
+    takingTurns()
 }
