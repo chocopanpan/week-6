@@ -1,7 +1,15 @@
-// Start by creating constant variables that won't have value changes that help set up the cards and decks //
-
   // The deck will consist of cards and the cards will make an array.  Also need to make it so that the deck can deal and shuffle out to the players. //
-class Deck {
+class Card {
+    constructor(suits, face, value) {
+        this.suits = suits;
+        this.face = face;
+        this.value = value;
+    }
+
+    
+}
+
+  class Deck {
     constructor() {
     this.deck = [];
     const suits = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
@@ -22,9 +30,9 @@ class Deck {
     'Ace' : 14
     }
 
-    for (let suit in suits) {
-        for (let value in values) {
-                this.deck.push(`${values[value]} of ${suits[suit]}`);
+    for (let suit of suits) {
+        for (let value of values) {
+                this.deck.push(new Card(suit, value, cvalues[value]));
             }
         }
     }
@@ -52,7 +60,7 @@ class Deck {
 const mainDeck = new Deck();
 mainDeck.shuffle();
 const deckOne = mainDeck.deck.slice(0, 26);
-const deckTwo = mainDeck.deck.slice(27, 53);
+const deckTwo = mainDeck.deck.slice(26, 53);
 
 // Create a player class.  The player will have: a name, a deck, and points to start out at the beginning of each round (the beginning count would be 0 for both of them) //
 class Player {
@@ -63,39 +71,34 @@ class Player {
     }
 }
 
-let playerOne = console.log(new Player('One', deckOne, 0));
-let playerTwo = console.log(new Player('Two', deckTwo, 0));
-console.log(`${this.playerOne} played ${deckOne[0]}`);
-console.log(deckTwo[0]);
+let playerOne = new Player('Player One', deckOne, 0);
+let playerTwo = new Player('Player Two', deckTwo, 0);
 
-// Create turning system.  The taking of turns for each player as they draw a card //
-function takingTurns() {
-    playerTwo = !playerTwo;
-}
-
-// Determine which player gets the point between the cards played //
-function winningCard(deckOne, deckTwo) {
-    
-    for (i = 0; i < deckOne[cvalue]; i++) {
-        for (j = 0; j < deckOne[cvalue]; j++) {
-    if (deckOne[cvalue] > deckTwo[cvalue]) {
-        `${playerOne} wins the round.`
-    } else if (deckTwo[cvalue] > deckOne[cvalue]) {
-        `${playerTwo} wins the round.`
-    } else {
-        "No player wins the round.  It's a tie."
-            }
+// Create system.  Compare the cards and collect the points //
+function playingGame() {
+    for (let i=0; i < 26; i++) {
+        const playerOneCard = playerOne.deck.pop();
+        const playerTwoCard = playerTwo.deck.pop();
+        console.log(`Round: ${i+1}`)
+        console.log(`Player One played ${playerOneCard.face} of ${playerOneCard.suits} Player Two played ${playerTwoCard.face} of ${playerTwoCard.suits}.`);
+        if (playerOneCard.value > playerTwoCard.value) {
+            playerOne.points++;
+            console.log('Player One wins the round!');
+        } else if (playerTwoCard.value > playerOneCard.value) {
+            playerTwo.points++;
+            console.log('Player Two wins the round!');
+        } else {
+            console.log("No one wins the round.  It's a tie!");
         }
+        console.log(`${playerOne.name} has ${playerOne.points} points and ${playerTwo.name} has ${playerTwo.points} points!`)
+    }
+    if (playerOne.points > playerTwo.points) {
+        console.log('Player One wins the game!');
+    } else if (playerTwo.points > playerOne.points) {
+        console.log('Player Two wins the game!');
+    } else {
+        console.log('No one wins the game. Ya both losers!');
     }
 }
 
-console.log(winningCard());
-
-// Creating a function to gather the points per player //
-
-
-// Create the code for the game in one place //
-
-function startWar() {
-    takingTurns()
-}
+playingGame();
